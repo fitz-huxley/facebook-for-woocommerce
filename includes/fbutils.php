@@ -85,7 +85,6 @@ if (!class_exists('WC_Facebookcommerce_Utils')) :
      */
     public static function get_fb_retailer_id($woo_product) {
       $woo_id = $woo_product->get_id();
-
       // Call $woo_product->get_id() instead of ->id to account for Variable
       // products, which have their own variant_ids.
       return $woo_product->get_sku() ? $woo_product->get_sku() . '_' .
@@ -127,7 +126,11 @@ if (!class_exists('WC_Facebookcommerce_Utils')) :
      * @return array
      */
     public static function get_fb_content_ids($woo_product) {
-      return array(self::get_fb_retailer_id($woo_product));
+      if(WC_Facebookcommerce_Utils::is_variation_type($woo_product->get_type())) {
+        return array(self::get_fb_retailer_id($woo_product));
+      }
+
+      return array($woo_product->get_slug());
     }
 
     /**
