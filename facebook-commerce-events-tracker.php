@@ -203,7 +203,7 @@ class WC_Facebookcommerce_EventsTracker {
         'content_name' => $product->get_title(),
         'content_ids' => json_encode($content_ids),
         'content_type' => $content_type,
-        'value' => $product->get_price(),
+        'value' => wc_get_price_including_tax($product),
         'currency' => get_woocommerce_currency()
       ));
   }
