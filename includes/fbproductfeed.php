@@ -116,8 +116,8 @@ class WC_Facebook_Product_Feed {
     // Proposed feature #1: Only upload products in the original language
     $product_ids = array_filter($product_ids, function($post_id){
         $default_lang = apply_filters('wpml_default_language', NULL );
-        $post_language_details = apply_filters( 'wpml_post_language_details', NULL, $post_id ) ;
-        if($post_language_details != $default_lang){
+        $post_language_details = apply_filters( 'wpml_post_language_details', NULL, $post_id );
+        if($post_language_details['language_code'] != $default_lang){
             return false;
         }
         return true;
@@ -246,7 +246,7 @@ class WC_Facebook_Product_Feed {
     // log simple product
     if (!isset($product_data['default_product'])) {
       $this->no_default_product_count++;
-      $product_data['default_product'];
+      $product_data['default_product'] = 'default';
     }
 
     return
