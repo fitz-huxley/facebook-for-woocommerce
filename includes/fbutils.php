@@ -130,7 +130,11 @@ if (!class_exists('WC_Facebookcommerce_Utils')) :
         return array(self::get_fb_retailer_id($woo_product));
       }
 
-      return array($woo_product->get_slug());
+      // Proposed fix #4: Fire contet_id as original language slug for non-variantion products.
+      $default_lang = apply_filters('wpml_default_language', NULL );
+      $original_product_id = icl_object_id($woo_product->get_id(), 'product', false, $default_lang);
+      $original_product = wc_get_product($original_product_id);
+      return array($original_product->get_slug());
     }
 
     /**
