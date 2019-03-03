@@ -246,7 +246,11 @@ class WC_Facebook_Product_Feed {
     // log simple product
     if (!isset($product_data['default_product'])) {
       $this->no_default_product_count++;
-      $product_data['default_product'] = 'default';
+      // Proposed fix #2 - Have retailer_id be the product slug in the case of product w/ no variant.
+      $post = get_post($woo_product->id);
+      $slug = $post->post_name;
+      $product_data['retailer_id'] = $slug;
+
     }
 
     return
