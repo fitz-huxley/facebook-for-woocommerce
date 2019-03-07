@@ -84,11 +84,18 @@ if (!class_exists('WC_Facebookcommerce_Utils')) :
      * @return string
      */
     public static function get_fb_retailer_id($woo_product) {
-      $woo_id = $woo_product->get_id();
-      // Call $woo_product->get_id() instead of ->id to account for Variable
-      // products, which have their own variant_ids.
-      return $woo_product->get_sku() ? $woo_product->get_sku() . '_' .
-        $woo_id : self::FB_RETAILER_ID_PREFIX . $woo_id;
+
+        // Proposed fix #4: Fire contet_id as original language slug for non-variantion products.
+        $default_lang = apply_filters('wpml_default_language', NULL );
+        $original_product_id = icl_object_id($woo_product->get_id(), 'product', false, $default_lang);
+        $original_product = wc_get_product($original_product_id);
+        return $original_product->get_slug();
+
+        // $woo_id = $woo_product->get_id();
+        // Call $woo_product->get_id() instead of ->id to account for Variable
+        // products, which have their own variant_ids.
+      // return $woo_product->get_sku() ? $woo_product->get_sku() . '_' .
+        // $woo_id : self::FB_RETAILER_ID_PREFIX . $woo_id;
     }
 
     /**
