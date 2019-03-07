@@ -170,7 +170,7 @@ class WC_Facebook_Product_Feed {
     $woo_product,
     &$attribute_variants) {
     $product_data = $woo_product->prepare_product(null, true);
-    $item_group_id = $product_data['retailer_id'];
+    $item_group_id = '';
     // prepare variant column for variable products
     $product_data['variant'] = '';
     if (
